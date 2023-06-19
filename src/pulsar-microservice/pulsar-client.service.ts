@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ClientProxy, ReadPacket, WritePacket } from '@nestjs/microservices';
 import { ClientOptions } from './interface';
-import Pulsar from 'pulsar-client';
+import * as Pulsar from 'pulsar-client';
 
 export const createClient = (host: string, port: string) => {
   return new Pulsar.Client({

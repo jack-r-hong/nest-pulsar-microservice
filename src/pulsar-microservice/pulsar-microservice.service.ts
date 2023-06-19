@@ -60,9 +60,9 @@ export class PulsarMicroserviceService
         return this.createConsumer(topic, async (message, consumer) => {
           const handler = this.messageHandlers.get(pattern);
           const data = JSON.parse(message.getData().toString());
-          const res = await handler(data.data, consumer);
 
           if (!isEventHandler) {
+            const res = await handler(data.data, consumer);
             const producer = await this.createProducer(`res-${pattern}`);
 
             if (res instanceof Observable) {
@@ -102,6 +102,8 @@ export class PulsarMicroserviceService
                 deliverAfter: 1000,
               });
             }
+          } else {
+            await handler(data, consumer);
           }
 
           if (this.options.autoAck) {
